@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "google-search",
+  "name_for_human": "Google Search Plugin",
+  "description_for_model": "Plugin for searching using Google Custom Search Engine and fetching the inner text of the first link in the search results.",
+  "description_for_human": "Search using Google Custom Search Engine.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://your-app-url.com/.well-known/openapi.yaml",
+    "has_user_authentication": false
+  },
+  "logo_url": "https://your-app-url.com/.well-known/logo.png",
+  "contact_email": "hello@contact.com",
+  "legal_info_url": "http://example.com/legal-info"
+}

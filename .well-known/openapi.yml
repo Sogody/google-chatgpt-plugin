@@ -1,0 +1,49 @@
+openapi: 3.0.3
+info:
+  title: Search API
+  description: A simple API to search using Google Custom Search Engine.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /search:
+    get:
+      summary: Search using Google Custom Search Engine
+      operationId: search
+      parameters:
+        - name: q
+          in: query
+          description: Search query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results and inner text of the first link
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        link:
+                          type: string
+                  first_link_inner_text:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
