@@ -51,6 +51,10 @@ CUSTOM_SEARCH_ENGINE_ID=your_custom_search_engine_id
 
 Replace your_google_api_key and your_custom_search_engine_id with your actual API key and custom search engine ID.
 
+You can create your Google API KEY in https://console.cloud.google.com/apis/credentials.
+
+You can get your custom search engine id in https://cse.google.com/cse/create/new.
+
 ## Usage
 
 1. Run the Flask app:
