@@ -15,7 +15,7 @@ A Flask app that uses the Google Custom Search API to search the web and fetch t
 
 1. Clone the repository:
 
-git clone https://github.com/yourusername/google-search-plugin.git
+git clone https://github.com/Sogody/google-chatgpt-plugin.git
 cd google-search-plugin
 
 Replace `yourusername` and `google-search-plugin` with your actual GitHub username and repository name.
@@ -75,6 +75,12 @@ Replace your_search_query with your actual search query.
 OpenAPI specification: http://localhost:5000/.well-known/openapi.yaml
 Logo: http://localhost:5000/.well-known/logo.png
 Replace localhost:5000 with your actual app URL when you deploy it to a server.
+
+## Deploy
+
+<a href="https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin/tree/main">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
 
 ## License
 
