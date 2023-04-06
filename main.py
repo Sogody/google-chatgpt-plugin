@@ -1,12 +1,15 @@
-import os
 from flask import Flask, request, jsonify, send_from_directory
 import requests
 from bs4 import BeautifulSoup
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
 
 app = Flask(__name__)
 
-API_KEY = ""
-CX = ""
+API_KEY = os.environ.get("GOOGLE_API_KEY")
+CX = os.environ.get("CUSTOM_SEARCH_ENGINE_ID")
 
 def fetch_inner_text(url):
     try:
