@@ -78,6 +78,8 @@ Replace localhost:5000 with your actual app URL when you deploy it to a server.
 
 ## Deploy
 
+Replace http://localhost:5000 with your actual app URL in OpenAPI specification and ai-plugin.json.
+
 <a href="https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin/tree/main">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
 </a>
