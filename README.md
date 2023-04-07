@@ -17,9 +17,9 @@ Deploy to Heroku with one click by clicking the button below:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin)
 
-You also need a Google API Key and a Custom Search Engine ID to complete the installation, both of which can be generated [here](https://console.cloud.google.com/apis/credentials) and [here](https://cse.google.com/cse/create/new).
+**A Google API Key and a Custom Search Engine ID is required to complete the installation, both of which can be generated [here](https://console.cloud.google.com/apis/credentials) and [here](https://cse.google.com/cse/create/new).**
 
-Once the installation is complete, you need to grab the app url and add it to ChatGPT Plugin installation page. To do this, click the "View" button at the bottom of the page, and copy the URL from the address bar.
+Once the installation is complete, grab the APP URL and add it to ChatGPT Plugin installation page. To do this, click the "View" button at the bottom of the page, and copy the URL from the address bar.
 
 ## Installation (Local)
 
