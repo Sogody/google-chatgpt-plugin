@@ -2,6 +2,11 @@
 
 A Flask app that uses the Google Custom Search API to search the web and fetch the summary for five first links in the search results as well as inner text of the first three links. The purpose of this app is to be used as a plugin for ChatGPT. 
 
+## How it works
+
+https://user-images.githubusercontent.com/1191646/230582839-966d8695-4791-4a6c-9806-24303583afbd.mp4
+
+
 ## Requirements
 
 - Python 3.6+
