@@ -11,7 +11,9 @@ A Flask app that uses the Google Custom Search API to search the web and fetch t
 - LXML
 - python-dotenv
 
-## Installation
+## Installation (Heroku)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+## Installation (Local)
 
 1. Clone the repository:
 
