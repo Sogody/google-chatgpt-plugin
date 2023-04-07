@@ -3,7 +3,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import requests
 import os
-from utils import SearchResult, fetch_content, process_results
+from utils import process_results
 
 app = Flask(__name__)
 CORS(app)
