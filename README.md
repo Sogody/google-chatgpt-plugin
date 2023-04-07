@@ -12,13 +12,16 @@ A Flask app that uses the Google Custom Search API to search the web and fetch t
 - python-dotenv
 
 ## Installation (Heroku)
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin)
 ## Installation (Local)
 
 1. Clone the repository:
 
+```bash
 git clone https://github.com/Sogody/google-chatgpt-plugin.git
+
 cd google-search-plugin
+```
 
 Replace `yourusername` and `google-search-plugin` with your actual GitHub username and repository name.
 
