@@ -12,7 +12,13 @@ A Flask app that uses the Google Custom Search API to search the web and fetch t
 - python-dotenv
 
 ## Installation (Heroku)
+
+Install to Heroku with one click by clicking the button below: 
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin)
+
+You also need a Google API Key and a Custom Search Engine ID to complete the installation, both of which can be generated [here](https://console.cloud.google.com/apis/credentials) and [here](https://cse.google.com/cse/create/new).
+
 ## Installation (Local)
 
 1. Clone the repository:
@@ -22,8 +28,6 @@ git clone https://github.com/Sogody/google-chatgpt-plugin.git
 
 cd google-search-plugin
 ```
-
-Replace `yourusername` and `google-search-plugin` with your actual GitHub username and repository name.
 
 2. Create a virtual environment and activate it:
 
@@ -54,7 +58,7 @@ GOOGLE_API_KEY=your_google_api_key
 CUSTOM_SEARCH_ENGINE_ID=your_custom_search_engine_id
 ```
 
-Replace your_google_api_key and your_custom_search_engine_id with your actual API key and custom search engine ID.
+Replace `your_google_api_key` and `your_custom_search_engine_id` with your actual API key and custom search engine ID.
 
 You can create your Google API KEY in https://console.cloud.google.com/apis/credentials.
 
@@ -65,8 +69,7 @@ You can get your custom search engine id in https://cse.google.com/cse/create/ne
 1. Run the Flask app:
 
 ```bash
-python app.py
-
+python main.py
 ```
 
 2. Access the app at http://localhost:5000/.
@@ -79,21 +82,9 @@ http://localhost:5000/search?q=your_search_query
 
 Replace your_search_query with your actual search query.
 
-4. To access the OpenAPI specification and the logo, visit the following URLs:
-
-OpenAPI specification: http://localhost:5000/.well-known/openapi.yaml
-Logo: http://localhost:5000/.well-known/logo.png
-Replace localhost:5000 with your actual app URL when you deploy it to a server.
-
 ## Deploy
 
-Replace http://localhost:5000 with your actual app URL in OpenAPI specification and ai-plugin.json.
-
-<a href="https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin/tree/main">
-  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
+For compatibility with ChatGPT, deploy the plugin on a publicly accessible host. Deployment steps vary depending on the platform, however, at the end, you need to enter the domain name (and possibly port if deploying to a non-standard port) at ChatGPT Plugin installation page.
 
 ## License
-
-Please add information about the license you are using for your project (e.g., MIT License, Apache License, etc.).
-
+MIT

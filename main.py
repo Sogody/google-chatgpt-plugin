@@ -3,6 +3,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import requests
 import os
+import json
 from utils import process_results
 
 app = Flask(__name__)
@@ -13,6 +14,15 @@ def load_environment_variables():
     return os.environ.get("GOOGLE_API_KEY"), os.environ.get("CUSTOM_SEARCH_ENGINE_ID")
 
 API_KEY, CX = load_environment_variables()
+
+@app.route('/.well-known/ai-plugin.json', methods=['GET'])
+def get_plugin_info():
+    with open('.well-known/ai-plugin.json') as f:
+        data = json.load(f)
+        data['api']['url'] = f"{request.scheme}://{request.host}/.well-known/openapi.yaml"
+        data['logo_url'] = f"{request.scheme}://{request.host}/.well-known/icon.png"
+
+        return jsonify(data)
 
 @app.route('/search', methods=['GET'])
 def search():
