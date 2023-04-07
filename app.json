@@ -1,6 +1,6 @@
 {
     "name": "Google Search Plugin",
-    "description": "A Flask app that uses the Google Custom Search API to search the web and fetch the inner text of the first link in the search results.",
+    "description": "A Flask app that uses the Google Custom Search API to search the web and fetch the summary for five first links in the search results as well as inner text of the first three links.",
     "repository": "https://github.com/Sogody/google-chatgpt-plugin",
     "keywords": ["gpt plugin", "google search"],
     "env": { 

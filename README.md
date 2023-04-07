@@ -1,6 +1,6 @@
 # Google Search Plugin
 
-A Flask app that uses the Google Custom Search API to search the web and fetch the inner text of the first link in the search results.
+A Flask app that uses the Google Custom Search API to search the web and fetch the summary for five first links in the search results as well as inner text of the first three links. The purpose of this app is to be used as a plugin for ChatGPT. 
 
 ## Requirements
 
@@ -13,11 +13,13 @@ A Flask app that uses the Google Custom Search API to search the web and fetch t
 
 ## Installation (Heroku)
 
-Install to Heroku with one click by clicking the button below: 
+Deploy to Heroku with one click by clicking the button below: 
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/Sogody/google-chatgpt-plugin)
 
 You also need a Google API Key and a Custom Search Engine ID to complete the installation, both of which can be generated [here](https://console.cloud.google.com/apis/credentials) and [here](https://cse.google.com/cse/create/new).
+
+Once the installation is complete, you need to grab the app url and add it to ChatGPT Plugin installation page. To do this, click the "View" button at the bottom of the page, and copy the URL from the address bar.
 
 ## Installation (Local)
 
