@@ -1,9 +1,10 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, Response
 from flask_cors import CORS
 from dotenv import load_dotenv
 import requests
 import os
 import json
+import yaml
 from utils import process_results
 
 app = Flask(__name__)
@@ -23,6 +24,15 @@ def get_plugin_info():
         data['logo_url'] = f"{request.scheme}://{request.host}/.well-known/icon.png"
 
         return jsonify(data)
+
+@app.route('/.well-known/openapi.yaml', methods=['GET'])
+def get_openai_info():
+    with open('.well-known/openapi.yaml') as f:
+        data = yaml.safe_load(f)
+        data['servers'][0]['url'] = f"{request.scheme}://{request.host}/.well-known/openapi.yaml"
+        yaml_data = yaml.dump(data)
+
+        return Response(yaml_data, content_type='application/x-yaml')
 
 @app.route('/search', methods=['GET'])
 def search():
