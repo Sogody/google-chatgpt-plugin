@@ -29,7 +29,7 @@ def get_plugin_info():
 def get_openai_info():
     with open('.well-known/openapi.yaml') as f:
         data = yaml.safe_load(f)
-        data['servers'][0]['url'] = f"{request.scheme}://{request.host}/.well-known/openapi.yaml"
+        data['servers'][0]['url'] = f"{request.scheme}://{request.host}"
         yaml_data = yaml.dump(data)
 
         return Response(yaml_data, content_type='application/x-yaml')
