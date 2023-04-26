@@ -32,7 +32,7 @@ def fetch_content(url, summary=False, query='', vectorize=False):
             soup = BeautifulSoup(response.text, 'lxml')
             text = ' '.join(soup.stripped_strings)
             text = text[:300] + '...' if summary else text
-            if vectorize && check_token_count(text, MAX_TOKENS):
+            if vectorize and check_token_count(text, MAX_TOKENS):
                 text = vector_index(text, query, max_tokens = MAX_TOKENS)
 
             return text
@@ -45,7 +45,7 @@ def fetch_content(url, summary=False, query='', vectorize=False):
 def process_results(results, query, has_openai_key = None):
     formatted_results = [SearchResult(res['title'], res['link']) for res in results]
 
-    for result in formatted_results[:5]:
+    for result in formatted_results[:10]:
         result.summary = fetch_content(
             result.link,
             summary=True,
@@ -53,7 +53,7 @@ def process_results(results, query, has_openai_key = None):
             vectorize=has_openai_key
         ) or "Error fetching summary"
 
-    for result in formatted_results[:3]:
+    for result in formatted_results[:5]:
         result.full_content = fetch_content(
             result.link, summary=False,
             query=query,

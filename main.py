@@ -12,9 +12,9 @@ CORS(app)
 
 def load_environment_variables():
     load_dotenv()
-    return 
-        os.environ.get("GOOGLE_API_KEY"),
-        os.environ.get("CUSTOM_SEARCH_ENGINE_ID"),
+    return \
+        os.environ.get("GOOGLE_API_KEY"), \
+        os.environ.get("CUSTOM_SEARCH_ENGINE_ID"), \
         os.environ.get("OPENAI_API_KEY")
 
 API_KEY, CX, OPENAI_API_KEY = load_environment_variables()
