@@ -8,4 +8,3 @@ gunicorn
 pyyaml
 transformers
 llama_index
-pinecone-client

@@ -4,7 +4,7 @@ import json
 from transformers import GPT2Tokenizer
 from indexer import vector_index
 
-MAX_TOKENS = 2048
+MAX_TOKENS = 1024
 
 class SearchResult:
     def __init__(self, title, link):
