@@ -6,3 +6,5 @@ python-dotenv
 flask-cors
 gunicorn
 pyyaml
+transformers
+llama_index

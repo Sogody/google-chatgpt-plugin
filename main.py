@@ -12,9 +12,13 @@ CORS(app)
 
 def load_environment_variables():
     load_dotenv()
-    return os.environ.get("GOOGLE_API_KEY"), os.environ.get("CUSTOM_SEARCH_ENGINE_ID")
+    return \
+        os.environ.get("GOOGLE_API_KEY"), \
+        os.environ.get("CUSTOM_SEARCH_ENGINE_ID"), \
+        os.environ.get("OPENAI_API_KEY")
 
-API_KEY, CX = load_environment_variables()
+API_KEY, CX, OPENAI_API_KEY = load_environment_variables()
+has_openai_key = OPENAI_API_KEY != None
 
 @app.route('/.well-known/ai-plugin.json', methods=['GET'])
 def get_plugin_info():
@@ -46,7 +50,8 @@ def search():
     if response.status_code == 200:
         data = response.json()
         results = data.get('items', [])
-        formatted_results = process_results(results)
+        formatted_results = process_results(results, query, has_openai_key)
+
         return jsonify({"results": formatted_results})
     else:
         return jsonify({"error": "Error fetching search results"}), response.status_code
