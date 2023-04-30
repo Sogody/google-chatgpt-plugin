@@ -33,7 +33,7 @@ Once the installation is complete, grab the APP URL and add it to ChatGPT Plugin
 ```bash
 git clone https://github.com/Sogody/google-chatgpt-plugin.git
 
-cd google-search-plugin
+cd google-chatgpt-plugin
 ```
 
 2. Create a virtual environment and activate it:
