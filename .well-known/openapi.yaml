@@ -44,7 +44,7 @@ paths:
                           description: The URL of the search result
                         summary:
                           type: string
-                          description: A summary of the HTML content of the search result (available for the first five results)
+                          description: A summary of the HTML content of the search result (available for the third through fith results)
                         full_content:
                           type: string
                           description: The entire HTML content of the search result (available for the first three results)

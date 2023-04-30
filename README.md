@@ -58,18 +58,20 @@ cd google-chatgpt-plugin
 pip install -r requirements.txt
 ```
 
-4. Create a .env file in the project directory with the following content:
+4. Copy .env.template to .env file and update the content as follows:
 
-```makefile
-GOOGLE_API_KEY=your_google_api_key
-CUSTOM_SEARCH_ENGINE_ID=your_custom_search_engine_id
-```
 
 Replace `your_google_api_key` and `your_custom_search_engine_id` with your actual API key and custom search engine ID.
 
 You can create your Google API KEY in https://console.cloud.google.com/apis/credentials.
 
 You can get your custom search engine id in https://cse.google.com/cse/create/new.
+
+Replace `your-api-key` and `your-org-id` with your actual OpenAI API key and organization ID.
+
+You can create your OpenAI API KEY in https://platform.openai.com/account/api-keys.
+
+You can get your organization ID in https://platform.openai.com/account/org-settings.
 
 ## Usage
 

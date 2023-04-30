@@ -1,5 +1,13 @@
+import os
 import requests
 from bs4 import BeautifulSoup
+import openai
+from dotenv import load_dotenv
+load_dotenv()
+
+# Initialize OpenAI API client
+openai.api_key = os.environ.get("OPENAI_API_KEY")
+openai.organization = os.environ.get("OPENAI_ORGANIZATION_ID")
 
 class SearchResult:
     def __init__(self, title, link):
@@ -16,30 +24,43 @@ class SearchResult:
             'full_content': self.full_content
         }
 
-def fetch_content(url, summary=False):
+def fetch_content(url):
     """
     Fetches the content of the given URL.
-    Returns a summary if the summary parameter is set to True.
     """
     try:
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'lxml')
             text = ' '.join(soup.stripped_strings)
-            return text[:300] + '...' if summary else text[:3500]
+            return text[:3500]
         else:
             return None
     except Exception as e:
         print(f"Error fetching content: {e}")
         return None
 
-def process_results(results):
+def summarize(text, query, model="text-davinci-003", tokens=500):
+    prompt = f"Please summarize all the relevant information in the following text based on the query: {query}\n###\n{text}"
+    response = openai.Completion.create(
+        engine=model,
+        prompt=prompt,
+        max_tokens=tokens,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
+    return response.choices[0].text.strip()
+
+def process_results(results, query):
     formatted_results = [SearchResult(res['title'], res['link']) for res in results]
 
-    for result in formatted_results[:5]:
-        result.summary = fetch_content(result.link, summary=True) or "Error fetching summary"
+    for result in formatted_results:
+        result.full_content = fetch_content(result.link) or "Error fetching content"
+        result.summary = None
 
-    for result in formatted_results[:1]:
-        result.full_content = fetch_content(result.link, summary=False) or "Error fetching content"
+    for result in formatted_results[3:]:
+        result.full_content = None
+        result.summary = summarize(result.full_content, query, tokens=250) or "Error fetching summary"
 
-    return [res.to_dict() for res in formatted_results][:5]
+    return [res.to_dict() for res in formatted_results]

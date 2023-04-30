@@ -9,6 +9,12 @@
       }, 
       "CUSTOM_SEARCH_ENGINE_ID": {
         "description": "Your Google Search Engine ID. Create one at https://cse.google.com/cse/create/new"
+      }, 
+      "OPENAI_API_KEY": {
+        "description": "Your OpenAI API Key. Create one at https://platform.openai.com/account/api-keys"
+      }, 
+      "OPENAI_ORGANIZATION_ID": {
+        "description": "Your OpenAI Organization ID. Lookup at https://platform.openai.com/account/org-settings"
       }
     }
   }

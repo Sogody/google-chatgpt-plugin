@@ -46,8 +46,8 @@ def search():
     if response.status_code == 200:
         data = response.json()
         results = data.get('items', [])
-        formatted_results = process_results(results)
-        return jsonify({"results": formatted_results})
+        formatted_results = process_results(results, query)
+        return jsonify({"results": formatted_results[:5]})
     else:
         return jsonify({"error": "Error fetching search results"}), response.status_code
 
