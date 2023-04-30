@@ -60,7 +60,7 @@ def process_results(results, query):
         result.summary = None
 
     for result in formatted_results[3:]:
-        result.full_content = None
         result.summary = summarize(result.full_content, query, tokens=250) or "Error fetching summary"
+        result.full_content = None
 
     return [res.to_dict() for res in formatted_results]
