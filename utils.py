@@ -55,7 +55,9 @@ def fetch_content(url):
         return None
 
 def summarize(text, query, model="text-davinci-003", tokens=500):
-    prompt = f"Please summarize all the relevant information in the following text based on the query: {query}\n###\n{text}"
+    prompt = f"Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}\n###\n{text}"
+    if debug:
+        print(f"Summarizing query: Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}")
     response = openai.Completion.create(
         engine=model,
         prompt=prompt,
