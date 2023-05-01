@@ -12,8 +12,8 @@ paths:
       operationId: searchGet
       summary: Search Google and fetch HTML content
       description: |
-        Searches Google using the provided query and returns the search results, along with the inner text of the first link.
-        The first five search results include a summary of the HTML content, while the first three have the entire HTML content returned in the response.
+        Searches Google using the provided query and returns the search results, along with the inner text of the links.
+        The first 3 search results are returned in the `full_content` property, while the next 7 search results only contain the `summary` property.
       parameters:
         - name: q
           in: query
@@ -44,10 +44,10 @@ paths:
                           description: The URL of the search result
                         summary:
                           type: string
-                          description: A summary of the HTML content of the search result (available for the first five results)
+                          description: A summary of the content of the search result (available for the fourth through tenth results)
                         full_content:
                           type: string
-                          description: The entire HTML content of the search result (available for the first three results)
+                          description: The entire text content of the search result (available for the first three results)
                 example:
                   results:
                     - title: Welcome to Python.org
