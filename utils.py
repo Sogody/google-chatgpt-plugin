@@ -35,7 +35,12 @@ def fetch_content(url):
     try:
         if debug:
             print(f"Fetching content for {url}")
-        response = requests.get(url)
+
+        headers = {}
+        headers['User-Agent'] = f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36"
+        headers['Referer'] = f"https://www.google.com/"
+
+        response = requests.get(url, headers=headers)
         if response.status_code == 200:
             content_type = response.headers.get('Content-Type', '').lower()
             if 'application/pdf' in content_type or url.lower().endswith(".pdf"):
