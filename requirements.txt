@@ -6,3 +6,4 @@ python-dotenv
 flask-cors
 gunicorn
 pyyaml
+pypdf

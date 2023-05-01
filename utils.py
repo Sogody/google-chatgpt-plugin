@@ -1,7 +1,9 @@
 import os
+from io import BytesIO
 import requests
-from bs4 import BeautifulSoup
 import openai
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -28,15 +30,23 @@ class SearchResult:
 
 def fetch_content(url):
     """
-    Fetches the content of the given URL.
+    Fetches the text content of the given URL. If the URL is a PDF, it will extract the text from the PDF.
     """
     try:
         if debug:
             print(f"Fetching content for {url}")
         response = requests.get(url)
         if response.status_code == 200:
-            soup = BeautifulSoup(response.text, 'lxml')
-            text = ' '.join(soup.stripped_strings)
+            content_type = response.headers.get('Content-Type', '').lower()
+            if 'application/pdf' in content_type or url.lower().endswith(".pdf"):
+                with BytesIO(response.content) as pdf_file:
+                    pdf_reader = PdfReader(pdf_file)
+                    text = ""
+                    for page in pdf_reader.pages:
+                        text += page.extract_text()
+            else:
+                soup = BeautifulSoup(response.text, 'lxml')
+                text = ' '.join(soup.stripped_strings)
             return text[:3500]
         else:
             return None
