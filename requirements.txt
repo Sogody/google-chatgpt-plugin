@@ -7,3 +7,5 @@ flask-cors
 gunicorn
 pyyaml
 pypdf
+tiktoken
+unicodedata

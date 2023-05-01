@@ -1,15 +1,21 @@
+import datetime
 import os
 from io import BytesIO
+import unicodedata
 import requests
 import openai
 from bs4 import BeautifulSoup
 from pypdf import PdfReader
+import tiktoken
 from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize OpenAI API client
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 openai.organization = os.environ.get("OPENAI_ORGANIZATION_ID")
+
+# Initialize tiktoken Tokenizer
+encoding = tiktoken.get_encoding("cl100k_base")
 
 debug = os.environ.get("DEBUG", False)
 
@@ -31,6 +37,7 @@ class SearchResult:
 def fetch_content(url):
     """
     Fetches the text content of the given URL. If the URL is a PDF, it will extract the text from the PDF.
+    Not meant for code snippets as we strip out all the HTML tags and most whitespace chacters.
     """
     try:
         if debug:
@@ -50,42 +57,53 @@ def fetch_content(url):
                     for page in pdf_reader.pages:
                         text += page.extract_text()
             else:
-                soup = BeautifulSoup(response.text, 'lxml')
-                text = ' '.join(soup.stripped_strings)
-            return text[:3500]
+                soup = BeautifulSoup(response.text, 'html.parser')
+                text = unicodedata.normalize('NFC', u' '.join(soup.body.stripped_strings))
+            return text
         else:
             return None
     except Exception as e:
         print(f"Error fetching content: {e}")
         return None
 
-def summarize(text, query, model="text-davinci-003", tokens=500):
-    prompt = f"Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}\n###\n{text}"
+def summarize(text, query, model="text-davinci-003", max_tokens=500):
+    prompt = f"The current date and time is {datetime.datetime.now()}. Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}\n###\n{text}"
+    prompt = text_shorten(prompt, 3500) + "\n###\n"
     if debug:
-        print(f"Summarizing query: Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}")
+        print(f"Summarizing query: The current date and time is {datetime.datetime.now()}. Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}")
     response = openai.Completion.create(
         engine=model,
         prompt=prompt,
-        max_tokens=tokens,
+        max_tokens=max_tokens,
         n=1,
         stop=None,
         temperature=0.5,
     )
     return response.choices[0].text.strip()
 
+def text_shorten(text, max_tokens=2000):
+    tokens = encoding.encode(text)
+    if len(tokens) < max_tokens:
+        return text
+    else:
+        shortened_tokens = tokens[:max_tokens]
+        shortened_text = encoding.decode(shortened_tokens)
+        return shortened_text
+
 def process_results(results, query):
     formatted_results = [SearchResult(res['title'], res['link']) for res in results]
 
-    for result in formatted_results:
-        if debug:
-            print(f"Fetching content for {result.title} - {result.link}")
+    for i, result in enumerate(formatted_results):
         result.full_content = fetch_content(result.link) or "Error fetching content"
         result.summary = None
 
+        if i < 3:
+            result.full_content = text_shorten(result.full_content, 1000)
+
     for result in formatted_results[3:]:
         if debug:
-            print(f"Summarizing content for {result.title} - {result.link}")
-        result.summary = summarize(result.full_content, query, tokens=250) or "Error fetching summary"
+            print(f"Summarizing content for {result.title} {result.link}")
+        result.summary = summarize(result.full_content, query, max_tokens=250) or "Error fetching summary"
         result.full_content = None
 
     return [res.to_dict() for res in formatted_results]
