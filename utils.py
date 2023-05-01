@@ -14,8 +14,12 @@ load_dotenv()
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 openai.organization = os.environ.get("OPENAI_ORGANIZATION_ID")
 
+# set the openai model to use
+default_model = 'text-davinci-003'
+max_context_length = 4096
+
 # Initialize tiktoken Tokenizer
-encoding = tiktoken.get_encoding("cl100k_base")
+encoding = tiktoken.encoding_for_model(default_model)
 
 debug = os.environ.get("DEBUG", False)
 
@@ -58,17 +62,17 @@ def fetch_content(url):
                         text += page.extract_text()
             else:
                 soup = BeautifulSoup(response.text, 'html.parser')
-                text = unicodedata.normalize('NFC', u' '.join(soup.body.stripped_strings))
-            return text
+                text = u' '.join(soup.body.stripped_strings)
+            return unicodedata.normalize('NFC', text)
         else:
             return None
     except Exception as e:
         print(f"Error fetching content: {e}")
         return None
 
-def summarize(text, query, model="text-davinci-003", max_tokens=500):
+def summarize(text, query, max_tokens=500, model=default_model):
     prompt = f"The current date and time is {datetime.datetime.now()}. Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}\n###\n{text}"
-    prompt = text_shorten(prompt, 3500) + "\n###\n"
+    prompt = text_shorten(prompt, max_context_length - max_tokens - 3) + "\n###\n"
     if debug:
         print(f"Summarizing query: The current date and time is {datetime.datetime.now()}. Please summarize all the relevant information and if there is not any reply with only 'Nothing related found' in the following text based on the query: {query}")
     response = openai.Completion.create(
@@ -81,7 +85,7 @@ def summarize(text, query, model="text-davinci-003", max_tokens=500):
     )
     return response.choices[0].text.strip()
 
-def text_shorten(text, max_tokens=2000):
+def text_shorten(text, max_tokens=max_context_length):
     tokens = encoding.encode(text)
     if len(tokens) < max_tokens:
         return text
