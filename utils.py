@@ -9,6 +9,8 @@ load_dotenv()
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 openai.organization = os.environ.get("OPENAI_ORGANIZATION_ID")
 
+debug = os.environ.get("DEBUG", False)
+
 class SearchResult:
     def __init__(self, title, link):
         self.title = title
@@ -29,6 +31,8 @@ def fetch_content(url):
     Fetches the content of the given URL.
     """
     try:
+        if debug:
+            print(f"Fetching content for {url}")
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.text, 'lxml')
@@ -56,10 +60,14 @@ def process_results(results, query):
     formatted_results = [SearchResult(res['title'], res['link']) for res in results]
 
     for result in formatted_results:
+        if debug:
+            print(f"Fetching content for {result.title} - {result.link}")
         result.full_content = fetch_content(result.link) or "Error fetching content"
         result.summary = None
 
     for result in formatted_results[3:]:
+        if debug:
+            print(f"Summarizing content for {result.title} - {result.link}")
         result.summary = summarize(result.full_content, query, tokens=250) or "Error fetching summary"
         result.full_content = None
 

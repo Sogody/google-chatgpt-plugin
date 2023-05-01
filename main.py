@@ -7,6 +7,9 @@ import json
 import yaml
 from utils import process_results
 
+
+debug = os.environ.get("DEBUG", False)
+
 app = Flask(__name__)
 CORS(app)
 
@@ -37,6 +40,8 @@ def get_openai_info():
 @app.route('/search', methods=['GET'])
 def search():
     query = request.args.get('q', '')
+    if debug:
+        print(f"Received query: {query}")
     if not query:
         return jsonify({"error": "No query provided"}), 400
 
@@ -56,4 +61,4 @@ def serve_well_known_files(filename):
     return send_from_directory(os.path.join(os.getcwd(), ".well-known"), filename)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', debug=debug)
